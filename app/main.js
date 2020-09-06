@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { app, BrowserWindow, globalShortcut } from 'electron';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -41,6 +42,17 @@ const createWindow = () => {
 
   if (!createClippingShortcut) {
     console.error('Registration Failed', 'create-clipping');
+  }
+
+  const writeToClipboardShortcut = globalShortcut.register(
+    'CommandOrControl+@',
+    () => {
+      console.log('Going to send a message to write to the clipboard');
+      mainWindow.webContents.send('write-to-clipboard');
+    },
+  );
+  if (!writeToClipboardShortcut) {
+    console.error('Registration Failed', 'write-to-clipboard');
   }
 };
 
